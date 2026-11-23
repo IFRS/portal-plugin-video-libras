@@ -1,5 +1,6 @@
 <?php
 
+require_once __DIR__ . '/../includes/class-settings.php';
 require_once __DIR__ . '/../includes/class-post-meta.php';
 require_once __DIR__ . '/../includes/class-frontend.php';
 
@@ -10,6 +11,21 @@ $styles = array();
 $singular = true;
 $post_id = 1;
 $video_url = '';
+$settings = array();
+define( 'PORTAL_VIDEO_LIBRAS_URL', 'https://example.test/plugin/' );
+
+function __( $text, $domain ) {
+	return $text;
+}
+
+function get_option( $key, $default ) {
+	global $settings;
+	return $settings;
+}
+
+function is_multisite() {
+	return false;
+}
 
 function add_action( $hook, $callback, $priority = 10 ) {
 	global $hooks;
@@ -47,6 +63,13 @@ function wp_parse_url( $url, $component ) {
 function esc_url( $url, $protocols ) {
 	return $url;
 }
+
+function esc_attr( $value ) { return htmlspecialchars( $value, ENT_QUOTES, 'UTF-8' ); }
+function esc_html( $value ) { return htmlspecialchars( $value, ENT_QUOTES, 'UTF-8' ); }
+function esc_attr_e( $value, $domain ) { echo esc_attr( $value ); }
+function sanitize_hex_color( $color ) { return preg_match( '/^#[a-f0-9]{6}$/i', $color ) ? $color : null; }
+function wp_json_encode( $value ) { return json_encode( $value ); }
+function do_blocks( $value ) { return '<video></video>'; }
 
 function wp_dequeue_script( $handle ) {
 	global $scripts;
@@ -96,5 +119,24 @@ foreach ( array(
 	$expected = $active ? array( 'vlibrasjs', 'vlibras-plugin', 'vlibras' ) : array();
 	check( $scripts === $expected && $styles === $expected, 'Incorrect VLibras asset dequeue.' );
 }
+
+$singular = true;
+$post_id = 1;
+$video_url = 'https://example.com/video.mp4';
+$settings['suppress_vlibras'] = false;
+$removed = $scripts = $styles = array();
+$frontend->remove_vlibras_hooks();
+$frontend->dequeue_vlibras_assets();
+check( $frontend->add_video_body_class( array() ) === array(), 'Disabled suppression added a body class.' );
+check( ! $removed && ! $scripts && ! $styles, 'Disabled suppression still removed VLibras.' );
+
+$settings = array( 'position' => 'middle', 'offset' => 42, 'color' => '#0078e1', 'width' => 'compact', 'label' => 'Teste "LIBRAS"' );
+ob_start();
+$frontend->render_player();
+$markup = ob_get_clean();
+check( false !== strpos( $markup, 'is-pos-middle' ), 'Position class missing.' );
+check( false !== strpos( $markup, '--portal-libras-bg:#0078e1;--portal-libras-fg:#000000;--portal-libras-offset:42px;--portal-libras-width:280px' ), 'Player style settings missing.' );
+check( false !== strpos( $markup, 'aria-label="Teste &quot;LIBRAS&quot;"' ), 'Accessible label not escaped.' );
+check( false !== strpos( $markup, 'Teste &quot;LIBRAS&quot;</h2>' ) || false !== strpos( $markup, 'Teste &quot;LIBRAS&quot;' ), 'Player title missing.' );
 
 echo "Frontend VLibras checks passed.\n";

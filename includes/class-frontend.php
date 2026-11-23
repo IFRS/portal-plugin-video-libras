@@ -31,7 +31,7 @@ final class Frontend {
 	 * @return void
 	 */
 	public function remove_vlibras_hooks() {
-		if ( ! $this->get_video_url() ) {
+		if ( ! Settings::get_option( 'suppress_vlibras' ) || ! $this->get_video_url() ) {
 			return;
 		}
 
@@ -45,7 +45,7 @@ final class Frontend {
 	 * @return void
 	 */
 	public function dequeue_vlibras_assets() {
-		if ( ! $this->get_video_url() ) {
+		if ( ! Settings::get_option( 'suppress_vlibras' ) || ! $this->get_video_url() ) {
 			return;
 		}
 
@@ -62,7 +62,7 @@ final class Frontend {
 	 * @return string[]
 	 */
 	public function add_video_body_class( $classes ) {
-		if ( $this->get_video_url() ) {
+		if ( Settings::get_option( 'suppress_vlibras' ) && $this->get_video_url() ) {
 			$classes[] = 'has-portal-video-libras';
 		}
 
@@ -112,16 +112,28 @@ final class Frontend {
 		if ( ! $video ) {
 			return;
 		}
+		$color    = Settings::get_option( 'color' );
+		$position = Settings::get_option( 'position' );
+		$label    = Settings::get_option( 'label' );
+		$widths   = array( 'compact' => 280, 'standard' => 340, 'large' => 420 );
+		$style    = sprintf(
+			'--portal-libras-bg:%s;--portal-libras-fg:%s;--portal-libras-offset:%dpx;--portal-libras-width:%dpx',
+			$color,
+			Settings::foreground( $color ),
+			Settings::get_option( 'offset' ),
+			$widths[ Settings::get_option( 'width' ) ]
+		);
 		?>
-		<div class="portal-libras-player">
+		<div class="portal-libras-player is-pos-<?php echo esc_attr( $position ); ?>" style="<?php echo esc_attr( $style ); ?>">
 			<button
 				class="portal-libras-player__toggle"
 				type="button"
-				aria-label="<?php esc_attr_e( 'Abrir vídeo em LIBRAS', 'portal-video-libras' ); ?>"
+				aria-label="<?php echo esc_attr( $label ); ?>"
+				title="<?php echo esc_attr( $label ); ?>"
 				aria-expanded="false"
 				aria-controls="portal-libras-player-panel"
 			>
-				<img src="<?php echo esc_url( PORTAL_VIDEO_LIBRAS_URL . 'assets/img/LIBRAS.svg' ); ?>" alt="" aria-hidden="true" focusable="false">
+				<?php echo Settings::icon(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Static SVG. ?>
 			</button>
 			<section
 				class="portal-libras-player__panel"
@@ -144,7 +156,7 @@ final class Frontend {
 						aria-label="<?php esc_attr_e( 'Redimensionar vídeo em LIBRAS: arraste ou use as setas esquerda e direita', 'portal-video-libras' ); ?>"
 					></button>
 					<h2 id="portal-libras-player-title">
-						<?php esc_html_e( 'Vídeo em LIBRAS', 'portal-video-libras' ); ?>
+						<?php echo esc_html( $label ); ?>
 					</h2>
 					<button
 						class="portal-libras-player__close"

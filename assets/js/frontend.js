@@ -109,6 +109,7 @@
 			panel.style.position = 'fixed';
 			panel.style.right = 'auto';
 			panel.style.bottom = 'auto';
+			panel.style.transform = 'none';
 			setWidth(geometry.width);
 			setPosition(geometry.left, geometry.top);
 			positioned = true;

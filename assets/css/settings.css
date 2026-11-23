@@ -1,0 +1,127 @@
+.portal-libras-settings__layout {
+	display: flex;
+	align-items: flex-start;
+	gap: 2rem;
+}
+
+.portal-libras-settings__layout form {
+	flex: 1;
+	min-width: 0;
+}
+
+.portal-libras-post-type {
+	display: block;
+	margin-bottom: 0.4rem;
+}
+
+.portal-libras-swatches {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+	margin-top: 0.5rem;
+}
+
+.portal-libras-swatch {
+	width: 32px;
+	height: 32px;
+	border: 1px solid #666;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.portal-libras-preview {
+	box-sizing: border-box;
+	width: 320px;
+	max-width: 100%;
+	padding: 1rem;
+	border: 1px solid #c3c4c7;
+	background: #fff;
+}
+
+.portal-libras-preview h2 {
+	margin-top: 0;
+}
+
+.portal-libras-preview__canvas {
+	position: relative;
+	height: 220px;
+	overflow: hidden;
+	background: #f0f0f1;
+}
+
+.portal-libras-preview__widget {
+	position: absolute;
+	right: var(--preview-offset);
+	display: flex;
+	flex-direction: column;
+	width: var(--preview-width);
+	color: var(--preview-fg);
+}
+
+.portal-libras-preview__widget.is-pos-bottom {
+	bottom: var(--preview-offset);
+}
+
+.portal-libras-preview__widget.is-pos-middle {
+	top: 50%;
+	align-items: center;
+	flex-direction: row;
+	width: calc(var(--preview-width) + 37px);
+	transform: translateY(-50%);
+}
+
+.portal-libras-preview__widget.is-pos-top {
+	top: var(--preview-offset);
+	flex-direction: column-reverse;
+}
+
+.portal-libras-preview__panel {
+	flex: 1;
+	min-width: 0;
+}
+
+.portal-libras-preview__header {
+	display: flex;
+	justify-content: space-between;
+	gap: 0.25rem;
+	padding: 0.3rem;
+	background: var(--preview-bg);
+	font-size: 11px;
+}
+
+.portal-libras-preview__video {
+	aspect-ratio: 16 / 9;
+	background: #dcdcde;
+}
+
+.portal-libras-preview__button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	margin: 5px 0 0 auto;
+	border: 2px solid var(--preview-fg);
+	border-radius: 50%;
+	background: var(--preview-bg);
+}
+
+.portal-libras-preview__button svg {
+	width: 23px;
+	height: 23px;
+}
+
+.portal-libras-preview__widget.is-pos-top .portal-libras-preview__button {
+	margin: 0 0 5px auto;
+}
+
+.portal-libras-preview__widget.is-pos-middle .portal-libras-preview__button {
+	flex: 0 0 32px;
+	margin: 0 0 0 5px;
+}
+
+@media (max-width: 782px) {
+	.portal-libras-settings__layout {
+		flex-direction: column;
+	}
+}

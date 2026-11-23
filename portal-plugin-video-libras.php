@@ -19,6 +19,7 @@ define( 'PORTAL_VIDEO_LIBRAS_FILE', __FILE__ );
 define( 'PORTAL_VIDEO_LIBRAS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'PORTAL_VIDEO_LIBRAS_URL', plugin_dir_url( __FILE__ ) );
 
+require_once PORTAL_VIDEO_LIBRAS_PATH . 'includes/class-settings.php';
 require_once PORTAL_VIDEO_LIBRAS_PATH . 'includes/class-post-meta.php';
 require_once PORTAL_VIDEO_LIBRAS_PATH . 'includes/class-frontend.php';
 require_once PORTAL_VIDEO_LIBRAS_PATH . 'includes/class-plugin.php';

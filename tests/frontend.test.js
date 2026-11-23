@@ -281,6 +281,22 @@ test('invalid saved geometry is ignored and closing during drag releases interac
 	assert.equal(page.getPauseCount(), 1);
 });
 
+test('initial geometry comes from the configured CSS before clearing the middle-position transform', () => {
+	const page = createPage('complete');
+	page.panel.getBoundingClientRect = function () {
+		const width = parseFloat(this.style.width) || 280;
+		const left = this.style.left ? parseFloat(this.style.left) : 640;
+		const top = this.style.top ? parseFloat(this.style.top) : 190;
+		return { left, top, width, height: 200, right: left + width, bottom: top + 200 };
+	};
+	initialize(page);
+	page.toggle.listeners.click();
+	assert.equal(page.panel.style.width, '280px');
+	assert.equal(page.panel.style.left, '640px');
+	assert.equal(page.panel.style.top, '190px');
+	assert.equal(page.panel.style.transform, 'none');
+});
+
 function createVlibrasPage(hasVideo, widgets = []) {
 	let observer;
 	let timer;

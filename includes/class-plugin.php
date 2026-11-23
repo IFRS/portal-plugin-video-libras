@@ -38,6 +38,7 @@ final class Plugin {
 	 * @return void
 	 */
 	public function register_hooks() {
+		( new Settings() )->register_hooks();
 		( new Post_Meta() )->register_hooks();
 		( new Frontend() )->register_hooks();
 	}

@@ -53,7 +53,7 @@ final class Post_Meta {
 	public function register_post_type( $post_type ) {
 		$post_type_object = get_post_type_object( $post_type );
 
-		if ( ! $post_type_object || ! $post_type_object->public ) {
+		if ( ! $post_type_object || ! $post_type_object->public || ! Settings::post_type_enabled( $post_type ) ) {
 			return;
 		}
 
@@ -209,7 +209,7 @@ final class Post_Meta {
 
 		$post_type_object = get_post_type_object( $post_type );
 
-		if ( ! $post_type_object || ! $post_type_object->public ) {
+		if ( ! $post_type_object || ! $post_type_object->public || ! Settings::post_type_enabled( $post_type ) ) {
 			return;
 		}
 
@@ -265,6 +265,7 @@ final class Post_Meta {
 			! $post instanceof \WP_Post
 			|| ! get_post_type_object( $post->post_type )
 			|| ! get_post_type_object( $post->post_type )->public
+			|| ! Settings::post_type_enabled( $post->post_type )
 			|| ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 			|| wp_is_post_revision( $post_id )
 			|| wp_is_post_autosave( $post_id )
@@ -339,6 +340,7 @@ final class Post_Meta {
 			! $screen
 			|| 'post' !== $screen->base
 			|| empty( $screen->post_type )
+			|| ! Settings::post_type_enabled( $screen->post_type )
 			|| ! use_block_editor_for_post_type( $screen->post_type )
 		) {
 			return;
