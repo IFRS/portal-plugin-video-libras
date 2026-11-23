@@ -1,0 +1,127 @@
+.portal-libras-player {
+	position: fixed;
+	right: 1.5rem;
+	bottom: 1.5rem;
+	z-index: 999999;
+	font-family: inherit;
+}
+
+.portal-libras-player__toggle {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	width: 3.75rem;
+	height: 3.75rem;
+	padding: 0.75rem;
+	border: 0.2rem solid #fff;
+	border-radius: 50%;
+	background: #164f9c;
+	box-shadow: 0 0.15rem 0.6rem rgb(0 0 0 / 35%);
+	color: #fff;
+	cursor: pointer;
+}
+
+.portal-libras-player__toggle img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.portal-libras-player__toggle:hover,
+.portal-libras-player__toggle:focus-visible {
+	background: #0c3974;
+}
+
+.portal-libras-player__panel {
+	position: absolute;
+	right: 0;
+	bottom: calc(100% + 0.75rem);
+	width: min(24rem, calc(100vw - 2rem));
+	max-width: calc(100vw - 32px);
+	max-height: min(80vh, max(0px, calc(100vh - 6rem)));
+	overflow: auto;
+	border-radius: 0.5rem;
+	background: #fff;
+	box-shadow: 0 0.2rem 1rem rgb(0 0 0 / 30%);
+	color: #1d2327;
+}
+
+.portal-libras-player__panel[hidden] {
+	display: none;
+}
+
+.portal-libras-player__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: 0.5rem 0.75rem;
+	background: #164f9c;
+	color: #fff;
+}
+
+.portal-libras-player__header h2 {
+	margin: 0;
+	color: inherit;
+	font-size: 1rem;
+}
+
+.portal-libras-player__close {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2rem;
+	height: 2rem;
+	border: 0;
+	border-radius: 50%;
+	background: transparent;
+	color: inherit;
+	cursor: pointer;
+	font-size: 1.5rem;
+}
+
+.portal-libras-player__close:hover,
+.portal-libras-player__close:focus-visible {
+	background: rgb(255 255 255 / 20%);
+}
+
+.portal-libras-player__video {
+	aspect-ratio: 16 / 9;
+}
+
+.portal-libras-player__video figure,
+.portal-libras-player__video .wp-block-embed__wrapper {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+}
+
+/* Override WordPress's responsive embed spacer and oEmbed dimensions. */
+.portal-libras-player__video .wp-block-embed__wrapper::before {
+	display: none !important;
+}
+
+.portal-libras-player__video iframe,
+.portal-libras-player__video video {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border: 0;
+}
+
+.portal-libras-player__video iframe {
+	width: 100% !important;
+	height: 100% !important;
+}
+
+.portal-libras-player__video video {
+	object-fit: contain;
+}
+
+@media (max-width: 30rem) {
+	.portal-libras-player {
+		right: 1rem;
+		bottom: 1rem;
+	}
+}

@@ -1,0 +1,21 @@
+# Node/Build
+node_modules/
+*.log
+npm-debug.log*
+.eslintcache
+coverage/
+
+# PHP/WordPress
+vendor/
+.phpcs-cache
+.phpunit.result.cache
+.env
+*.zip
+
+# Sistema Operacional
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/

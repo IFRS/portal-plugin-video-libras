@@ -1,0 +1,12 @@
+{
+	"name": "portal-plugin-video-libras",
+	"version": "1.0.0",
+	"private": true,
+	"scripts": {
+		"build": "wp-scripts build assets/src/editor.js --output-path=assets/build",
+		"start": "wp-scripts start assets/src/editor.js --output-path=assets/build"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^30.0.0"
+	}
+}
