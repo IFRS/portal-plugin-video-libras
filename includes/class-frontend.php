@@ -85,7 +85,17 @@ final class Frontend {
 				tabindex="-1"
 				hidden
 			>
-				<header class="portal-libras-player__header">
+				<header
+					class="portal-libras-player__header"
+					role="group"
+					tabindex="0"
+					aria-label="<?php esc_attr_e( 'Mover vídeo em LIBRAS: use as setas do teclado ou arraste', 'portal-video-libras' ); ?>"
+				>
+					<button
+						class="portal-libras-player__resize"
+						type="button"
+						aria-label="<?php esc_attr_e( 'Redimensionar vídeo em LIBRAS: arraste ou use as setas esquerda e direita', 'portal-video-libras' ); ?>"
+					></button>
 					<h2 id="portal-libras-player-title">
 						<?php esc_html_e( 'Vídeo em LIBRAS', 'portal-video-libras' ); ?>
 					</h2>
