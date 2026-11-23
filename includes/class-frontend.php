@@ -133,7 +133,7 @@ final class Frontend {
 				aria-expanded="false"
 				aria-controls="portal-libras-player-panel"
 			>
-				<?php echo Settings::icon(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Static SVG. ?>
+				<?php echo Settings::icon(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Static markup. ?>
 			</button>
 			<section
 				class="portal-libras-player__panel"

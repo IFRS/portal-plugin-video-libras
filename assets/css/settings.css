@@ -106,9 +106,13 @@
 	background: var(--preview-bg);
 }
 
-.portal-libras-preview__button svg {
+.portal-libras-preview__button .portal-libras-icon {
+	display: block;
 	width: 23px;
 	height: 23px;
+	background: currentColor;
+	-webkit-mask: url("../img/LIBRAS.svg?mask=1") center / contain no-repeat;
+	mask: url("../img/LIBRAS.svg?mask=1") center / contain no-repeat;
 }
 
 .portal-libras-preview__widget.is-pos-top .portal-libras-preview__button {

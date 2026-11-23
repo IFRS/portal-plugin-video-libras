@@ -45,10 +45,13 @@ body.has-portal-video-libras [vw-plugin-wrapper] {
 	cursor: pointer;
 }
 
-.portal-libras-player__toggle svg {
+.portal-libras-player__toggle .portal-libras-icon {
 	display: block;
 	width: 100%;
-	height: auto;
+	height: 100%;
+	background: currentColor;
+	-webkit-mask: url("../img/LIBRAS.svg?mask=1") center / contain no-repeat;
+	mask: url("../img/LIBRAS.svg?mask=1") center / contain no-repeat;
 }
 
 .portal-libras-player__toggle:hover,

@@ -110,7 +110,7 @@ final class Settings {
 	}
 
 	public static function icon() {
-		return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 12V5a1 1 0 0 1 2 0v5-7a1 1 0 0 1 2 0v7-6a1 1 0 0 1 2 0v6-4a1 1 0 0 1 2 0v7l1.5-2a1.5 1.5 0 0 1 2.4 1.8l-3.1 4.5A6 6 0 0 1 11 20h-1a5 5 0 0 1-5-5v-2a1 1 0 0 1 2-1Z"/><path d="M18 5l1-2m1 5 2-1"/></svg>';
+		return '<span class="portal-libras-icon" aria-hidden="true"></span>';
 	}
 
 	public function register_settings() {
@@ -268,7 +268,7 @@ final class Settings {
 								<div class="portal-libras-preview__header"><span class="portal-libras-preview__label"></span><span aria-hidden="true">&times;</span></div>
 								<div class="portal-libras-preview__video"></div>
 							</div>
-							<div class="portal-libras-preview__button"><?php echo self::icon(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Static SVG. ?></div>
+							<div class="portal-libras-preview__button"><?php echo self::icon(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Static markup. ?></div>
 						</div>
 					</div>
 				</aside>

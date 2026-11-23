@@ -138,5 +138,6 @@ check( false !== strpos( $markup, 'is-pos-middle' ), 'Position class missing.' )
 check( false !== strpos( $markup, '--portal-libras-bg:#0078e1;--portal-libras-fg:#000000;--portal-libras-offset:42px;--portal-libras-width:280px' ), 'Player style settings missing.' );
 check( false !== strpos( $markup, 'aria-label="Teste &quot;LIBRAS&quot;"' ), 'Accessible label not escaped.' );
 check( false !== strpos( $markup, 'Teste &quot;LIBRAS&quot;</h2>' ) || false !== strpos( $markup, 'Teste &quot;LIBRAS&quot;' ), 'Player title missing.' );
+check( false !== strpos( $markup, '<span class="portal-libras-icon" aria-hidden="true"></span>' ), 'LIBRAS icon missing from player.' );
 
 echo "Frontend VLibras checks passed.\n";
