@@ -3,10 +3,16 @@
 	"version": "1.0.0",
 	"private": true,
 	"scripts": {
-		"build": "wp-scripts build assets/src/editor.js --output-path=assets/build",
-		"start": "wp-scripts start assets/src/editor.js --output-path=assets/build"
+		"build": "npm run lint && node scripts/clean-build.js && wp-scripts build assets/src/editor.js assets/src/frontend.js assets/src/settings.js --config webpack.config.js --output-path=assets/build && node scripts/package-build.js",
+		"dev": "npm run start",
+		"lint": "npm run lint:js && npm run lint:css",
+		"lint:css": "wp-scripts lint-style assets/css",
+		"lint:js": "wp-scripts lint-js assets/src assets/js",
+		"start": "wp-scripts start assets/src/editor.js assets/src/frontend.js assets/src/settings.js --config webpack.config.js --output-path=assets/build"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^30.0.0"
+		"@wordpress/scripts": "^30.0.0",
+		"adm-zip": "^0.5.18",
+		"typescript": "5.4.5"
 	}
 }

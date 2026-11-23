@@ -81,14 +81,14 @@ final class Frontend {
 
 		wp_enqueue_style(
 			'portal-video-libras',
-			PORTAL_VIDEO_LIBRAS_URL . 'assets/css/frontend.css',
+			PORTAL_VIDEO_LIBRAS_URL . 'assets/build/frontend.css',
 			array(),
 			PORTAL_VIDEO_LIBRAS_VERSION
 		);
 
 		wp_enqueue_script(
 			'portal-video-libras',
-			PORTAL_VIDEO_LIBRAS_URL . 'assets/js/frontend.js',
+			PORTAL_VIDEO_LIBRAS_URL . 'assets/build/frontend.js',
 			array(),
 			PORTAL_VIDEO_LIBRAS_VERSION,
 			true

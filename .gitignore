@@ -1,5 +1,7 @@
 # Node/Build
 node_modules/
+/build/
+/assets/build/
 *.log
 npm-debug.log*
 .eslintcache

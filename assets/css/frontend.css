@@ -25,10 +25,6 @@ body.has-portal-video-libras [vw-plugin-wrapper] {
 	top: 50%;
 }
 
-.portal-libras-player.is-pos-middle .portal-libras-player__toggle {
-	transform: translateY(-50%);
-}
-
 .portal-libras-player__toggle {
 	display: flex;
 	align-items: center;
@@ -49,15 +45,19 @@ body.has-portal-video-libras [vw-plugin-wrapper] {
 	display: block;
 	width: 100%;
 	height: 100%;
-	background: currentColor;
-	-webkit-mask: url("../img/LIBRAS.svg?mask=1") center / contain no-repeat;
-	mask: url("../img/LIBRAS.svg?mask=1") center / contain no-repeat;
+	background: currentcolor;
+	-webkit-mask: url(../img/LIBRAS.svg?mask=1) center / contain no-repeat;
+	mask: url(../img/LIBRAS.svg?mask=1) center / contain no-repeat;
 }
 
 .portal-libras-player__toggle:hover,
 .portal-libras-player__toggle:focus-visible {
 	outline: 3px solid var(--portal-libras-fg, #fff);
 	outline-offset: 2px;
+}
+
+.portal-libras-player.is-pos-middle .portal-libras-player__toggle {
+	transform: translateY(-50%);
 }
 
 .portal-libras-player__panel {
@@ -102,10 +102,6 @@ body.has-portal-video-libras [vw-plugin-wrapper] {
 	touch-action: none;
 }
 
-.portal-libras-player__panel.is-interacting .portal-libras-player__header {
-	cursor: grabbing;
-}
-
 .portal-libras-player__resize {
 	position: absolute;
 	top: 0;
@@ -120,15 +116,13 @@ body.has-portal-video-libras [vw-plugin-wrapper] {
 }
 
 .portal-libras-player__header:focus-visible,
-.portal-libras-player__resize:focus-visible,
-.portal-libras-player__close:focus-visible {
+.portal-libras-player__resize:focus-visible {
 	outline: 3px solid #ffdf57;
 	outline-offset: -3px;
 }
 
-.portal-libras-player__panel.is-interacting iframe,
-.portal-libras-player__panel.is-interacting video {
-	pointer-events: none;
+.portal-libras-player__panel.is-interacting .portal-libras-player__header {
+	cursor: grabbing;
 }
 
 body.portal-libras-player-interacting {
@@ -153,6 +147,11 @@ body.portal-libras-player-interacting {
 	color: inherit;
 	cursor: pointer;
 	font-size: 1.5rem;
+}
+
+.portal-libras-player__close:focus-visible {
+	outline: 3px solid #ffdf57;
+	outline-offset: -3px;
 }
 
 .portal-libras-player__close:hover,
@@ -191,4 +190,9 @@ body.portal-libras-player-interacting {
 
 .portal-libras-player__video video {
 	object-fit: contain;
+}
+
+.portal-libras-player__panel.is-interacting iframe,
+.portal-libras-player__panel.is-interacting video {
+	pointer-events: none;
 }

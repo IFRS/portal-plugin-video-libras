@@ -110,9 +110,9 @@
 	display: block;
 	width: 23px;
 	height: 23px;
-	background: currentColor;
-	-webkit-mask: url("../img/LIBRAS.svg?mask=1") center / contain no-repeat;
-	mask: url("../img/LIBRAS.svg?mask=1") center / contain no-repeat;
+	background: currentcolor;
+	-webkit-mask: url(../img/LIBRAS.svg?mask=1) center / contain no-repeat;
+	mask: url(../img/LIBRAS.svg?mask=1) center / contain no-repeat;
 }
 
 .portal-libras-preview__widget.is-pos-top .portal-libras-preview__button {
@@ -125,6 +125,7 @@
 }
 
 @media (max-width: 782px) {
+
 	.portal-libras-settings__layout {
 		flex-direction: column;
 	}

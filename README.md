@@ -4,14 +4,16 @@ Plugin WordPress para associar um vídeo em LIBRAS a qualquer tipo de conteúdo 
 
 ## Instalação
 
-Copie esta pasta para `wp-content/plugins/portal-plugin-video-libras` e ative o plugin no painel do WordPress.
+Para instalar pelo painel do WordPress, envie `build/portal-plugin-video-libras.zip` em **Plugins > Adicionar novo > Enviar plugin**.
 
-O painel do Editor de Blocos e os assets do front-end já estão incluídos. Para recompilar o painel após alterar `assets/src/editor.js`, instale as dependências de desenvolvimento e execute:
+Para usar o repositório diretamente em `wp-content/plugins/portal-plugin-video-libras` ou alterar os assets, gere os arquivos compilados antes de ativar o plugin:
 
 ```sh
 npm install
 npm run build
 ```
+
+Durante o desenvolvimento, use `npm run start` para recompilar os assets ao salvar alterações. O build inclui o Editor de Blocos, os scripts e estilos do front-end e da tela de configurações; os arquivos gerados em `assets/build/` e `build/` não são versionados.
 
 ## Uso
 

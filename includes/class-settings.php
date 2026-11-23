@@ -149,8 +149,8 @@ final class Settings {
 		if ( ! isset( $_GET['page'] ) || self::PAGE !== sanitize_key( wp_unslash( $_GET['page'] ) ) || false === strpos( $hook, 'portal-video-libras' ) ) {
 			return;
 		}
-		wp_enqueue_style( 'portal-video-libras-settings', PORTAL_VIDEO_LIBRAS_URL . 'assets/css/settings.css', array(), PORTAL_VIDEO_LIBRAS_VERSION );
-		wp_enqueue_script( 'portal-video-libras-settings', PORTAL_VIDEO_LIBRAS_URL . 'assets/js/settings.js', array(), PORTAL_VIDEO_LIBRAS_VERSION, true );
+		wp_enqueue_style( 'portal-video-libras-settings', PORTAL_VIDEO_LIBRAS_URL . 'assets/build/settings.css', array(), PORTAL_VIDEO_LIBRAS_VERSION );
+		wp_enqueue_script( 'portal-video-libras-settings', PORTAL_VIDEO_LIBRAS_URL . 'assets/build/settings.js', array(), PORTAL_VIDEO_LIBRAS_VERSION, true );
 	}
 
 	private function page_values() {
