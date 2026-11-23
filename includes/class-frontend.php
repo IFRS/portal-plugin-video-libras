@@ -18,8 +18,55 @@ final class Frontend {
 	 * @return void
 	 */
 	public function register_hooks() {
+		add_action( 'wp', array( $this, 'remove_vlibras_hooks' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'dequeue_vlibras_assets' ), 999 );
 		add_action( 'wp_footer', array( $this, 'render_player' ), 20 );
+		add_filter( 'body_class', array( $this, 'add_video_body_class' ) );
+	}
+
+	/**
+	 * Removes the official VLibras plugin's callbacks on pages with video.
+	 *
+	 * @return void
+	 */
+	public function remove_vlibras_hooks() {
+		if ( ! $this->get_video_url() ) {
+			return;
+		}
+
+		remove_action( 'wp_footer', 'vlibras_widget' );
+		remove_action( 'wp_enqueue_scripts', 'vlibras_enqueue' );
+	}
+
+	/**
+	 * Dequeues known VLibras assets on pages with video.
+	 *
+	 * @return void
+	 */
+	public function dequeue_vlibras_assets() {
+		if ( ! $this->get_video_url() ) {
+			return;
+		}
+
+		foreach ( array( 'vlibrasjs', 'vlibras-plugin', 'vlibras' ) as $handle ) {
+			wp_dequeue_script( $handle );
+			wp_dequeue_style( $handle );
+		}
+	}
+
+	/**
+	 * Marks pages with a valid video for front-end VLibras suppression.
+	 *
+	 * @param string[] $classes Body classes.
+	 * @return string[]
+	 */
+	public function add_video_body_class( $classes ) {
+		if ( $this->get_video_url() ) {
+			$classes[] = 'has-portal-video-libras';
+		}
+
+		return $classes;
 	}
 
 	/**

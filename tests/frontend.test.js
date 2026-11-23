@@ -280,3 +280,98 @@ test('invalid saved geometry is ignored and closing during drag releases interac
 	assert.equal(page.header.pointerId, null);
 	assert.equal(page.getPauseCount(), 1);
 });
+
+function createVlibrasPage(hasVideo, widgets = []) {
+	let observer;
+	let timer;
+	const document = {
+		readyState: 'complete',
+		body: { classList: { contains: () => hasVideo } },
+		querySelector: () => null,
+		querySelectorAll: () => widgets,
+	};
+	const window = {
+		setTimeout(callback, delay) {
+			timer = { callback, delay, cleared: false };
+			return timer;
+		},
+		clearTimeout(id) {
+			id.cleared = true;
+		},
+	};
+	class MutationObserver {
+		constructor(callback) {
+			observer = this;
+			this.callback = callback;
+			this.disconnected = false;
+		}
+		observe(target, options) {
+			this.target = target;
+			this.options = options;
+		}
+		disconnect() {
+			this.disconnected = true;
+		}
+	}
+	vm.runInNewContext(script, { document, window, MutationObserver, console });
+	return { widgets, getObserver: () => observer, getTimer: () => timer };
+}
+
+function vlibrasWidget() {
+	const classes = new Set(['enabled']);
+	return {
+		nodeType: 1,
+		attributes: {},
+		matches: (selector) => selector === 'div[vw]',
+		querySelectorAll: () => [],
+		classList: {
+			contains: (name) => classes.has(name),
+			remove: (name) => classes.delete(name),
+		},
+		setAttribute(name, value) {
+			this.attributes[name] = value;
+		},
+	};
+}
+
+test('suppresses an existing VLibras widget only on pages with video', () => {
+	const widget = vlibrasWidget();
+	const page = createVlibrasPage(true, [widget]);
+	assert.equal(widget.classList.contains('enabled'), false);
+	assert.equal(widget.attributes['aria-hidden'], 'true');
+	assert.equal(page.getObserver(), undefined);
+
+	const untouched = vlibrasWidget();
+	const otherPage = createVlibrasPage(false, [untouched]);
+	assert.equal(untouched.classList.contains('enabled'), true);
+	assert.equal(untouched.attributes['aria-hidden'], undefined);
+	assert.equal(otherPage.getObserver(), undefined);
+});
+
+test('suppresses dynamically injected VLibras widgets and stops observing', () => {
+	const page = createVlibrasPage(true);
+	const observer = page.getObserver();
+	assert.equal(observer.options.childList, true);
+	assert.equal(observer.options.subtree, true);
+	assert.equal(page.getTimer().delay, 10000);
+	observer.callback([{ addedNodes: [{ nodeType: 3 }] }]);
+	assert.equal(observer.disconnected, false);
+	const first = vlibrasWidget();
+	const second = vlibrasWidget();
+	const container = {
+		nodeType: 1,
+		matches: () => false,
+		querySelectorAll: () => [second],
+	};
+	observer.callback([{ addedNodes: [first, container] }]);
+	assert.equal(first.classList.contains('enabled'), false);
+	assert.equal(second.attributes['aria-hidden'], 'true');
+	assert.equal(observer.disconnected, true);
+	assert.equal(page.getTimer().cleared, true);
+});
+
+test('stops observing after the timeout if no widget is injected', () => {
+	const page = createVlibrasPage(true);
+	page.getTimer().callback();
+	assert.equal(page.getObserver().disconnected, true);
+});

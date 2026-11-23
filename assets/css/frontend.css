@@ -1,3 +1,11 @@
+body.has-portal-video-libras div[vw],
+body.has-portal-video-libras [vw-access-button],
+body.has-portal-video-libras [vw-plugin-wrapper] {
+	display: none !important;
+	visibility: hidden !important;
+	pointer-events: none !important;
+}
+
 .portal-libras-player {
 	position: fixed;
 	right: 1.5rem;

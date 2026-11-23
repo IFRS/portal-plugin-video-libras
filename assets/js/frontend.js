@@ -1,7 +1,49 @@
 (function () {
 	'use strict';
 
+	function suppressVlibras() {
+		if (!document.body.classList.contains('has-portal-video-libras')) {
+			return;
+		}
+
+		function disableWidgets(widgets) {
+			widgets.forEach(function (widget) {
+				widget.classList.remove('enabled');
+				widget.setAttribute('aria-hidden', 'true');
+			});
+			return widgets.length > 0;
+		}
+
+		if (disableWidgets(document.querySelectorAll('div[vw]'))) {
+			return;
+		}
+
+		var observer = new MutationObserver(function (mutations) {
+			var found = false;
+			mutations.forEach(function (mutation) {
+				mutation.addedNodes.forEach(function (node) {
+					if (node.nodeType !== 1) {
+						return;
+					}
+					if (node.matches('div[vw]')) {
+						found = disableWidgets([node]) || found;
+					}
+					found = disableWidgets(node.querySelectorAll('div[vw]')) || found;
+				});
+			});
+			if (found) {
+				observer.disconnect();
+				window.clearTimeout(timeout);
+			}
+		});
+		observer.observe(document.body, { childList: true, subtree: true });
+		var timeout = window.setTimeout(function () {
+			observer.disconnect();
+		}, 10000);
+	}
+
 	function initPlayer() {
+		suppressVlibras();
 		var root = document.querySelector('.portal-libras-player');
 		if (!root) {
 			return;
