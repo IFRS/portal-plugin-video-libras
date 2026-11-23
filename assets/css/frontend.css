@@ -8,7 +8,7 @@ body.has-portal-video-libras [vw-plugin-wrapper] {
 
 .portal-libras-player {
 	position: fixed;
-	right: var(--portal-libras-offset, 24px);
+	right: var(--portal-libras-offset, 16px);
 	z-index: 999999;
 	font-family: inherit;
 }

@@ -22,7 +22,7 @@ final class Settings {
 	public static function defaults() {
 		return array(
 			'position'         => 'bottom',
-			'offset'           => 24,
+			'offset'           => 16,
 			'color'            => '#005a9c',
 			'width'            => 'standard',
 			'label'            => __( 'Tradução em LIBRAS', 'portal-video-libras' ),
