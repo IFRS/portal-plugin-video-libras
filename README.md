@@ -23,7 +23,7 @@ Em Multisite, as configurações padrão ficam em **Administração da rede > Co
 
 No Editor de Blocos, informe a URL no painel **Vídeo em LIBRAS** da barra lateral. No Editor Clássico, use a caixa **Vídeo em LIBRAS**. URLs HTTP/HTTPS de YouTube, Vimeo e arquivos diretos (`.mp4`, `.webm`, `.ogv` e `.m4v`) são aceitas. Deixe o campo vazio para remover o vídeo.
 
-O player aparece automaticamente nas páginas singulares que tenham uma URL válida. A janela usa proporção 16:9 para vídeos incorporados e adapta-se às dimensões dos vídeos diretos quando seus metadados estão disponíveis. Em telas pequenas, a janela pode ser rolada para exibir vídeos verticais.
+O player aparece automaticamente nas páginas singulares que tenham uma URL válida. O vídeo é carregado somente quando a janela é aberta pela primeira vez. A janela usa proporção 16:9 para vídeos incorporados e adapta-se às dimensões dos vídeos diretos quando seus metadados estão disponíveis. Em telas pequenas, a janela pode ser rolada para exibir vídeos verticais.
 
 Por padrão, nessas páginas, o widget VLibras é ocultado para priorizar o vídeo em LIBRAS. O plugin desativa os hooks e assets conhecidos do plugin oficial e também oculta widgets inseridos pelo tema ou por ferramentas como o Google Tag Manager. Essa integração pode ser desativada nas configurações. Nas páginas sem URL válida, o VLibras permanece inalterado. Para inserções tardias, a neutralização por JavaScript é observada por até 10 segundos; a ocultação por CSS continua ativa após esse período.
 

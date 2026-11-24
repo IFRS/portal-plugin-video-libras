@@ -64,11 +64,17 @@
 		const videoContainer = root.querySelector(
 			'.portal-libras-player__video'
 		);
+		const videoTemplate = root.querySelector(
+			'.portal-libras-player__template'
+		);
 		const iframeSources = new WeakMap();
 		const storageKey = 'portal-libras-player-geometry';
 		const margin = 8;
 		let interaction = null;
 		let positioned = false;
+		let videoInitialized = false;
+		let animationFrame = null;
+		let pendingMovement = null;
 
 		function clamp( value, min, max ) {
 			return Math.min( Math.max( value, min ), Math.max( min, max ) );
@@ -164,6 +170,10 @@
 			if ( ! interaction ) {
 				return;
 			}
+			if ( animationFrame !== null ) {
+				window.cancelAnimationFrame( animationFrame );
+				applyMovement();
+			}
 			const active = interaction;
 			interaction = null;
 			panel.classList.remove( 'is-interacting' );
@@ -174,6 +184,24 @@
 				active.handle.releasePointerCapture( active.pointerId );
 			}
 			saveGeometry();
+		}
+
+		function applyMovement() {
+			animationFrame = null;
+			const movement = pendingMovement;
+			pendingMovement = null;
+			if ( interaction.mode === 'drag' ) {
+				setPosition(
+					interaction.left + movement.dx,
+					interaction.top + movement.dy
+				);
+			} else {
+				resizeFrom(
+					interaction.left + movement.dx,
+					interaction.right,
+					interaction.bottom
+				);
+			}
 		}
 
 		function startInteraction( event, mode, handle ) {
@@ -216,16 +244,13 @@
 				) {
 					return;
 				}
-				const dx = event.clientX - interaction.x;
-				const dy = event.clientY - interaction.y;
-				if ( interaction.mode === 'drag' ) {
-					setPosition( interaction.left + dx, interaction.top + dy );
-				} else {
-					resizeFrom(
-						interaction.left + dx,
-						interaction.right,
-						interaction.bottom
-					);
+				pendingMovement = {
+					dx: event.clientX - interaction.x,
+					dy: event.clientY - interaction.y,
+				};
+				if ( animationFrame === null ) {
+					animationFrame =
+						window.requestAnimationFrame( applyMovement );
 				}
 			} );
 			[ 'pointerup', 'pointercancel', 'lostpointercapture' ].forEach(
@@ -281,20 +306,33 @@
 			}
 		} );
 
-		videoContainer.querySelectorAll( 'video' ).forEach( function ( video ) {
-			function updateAspectRatio() {
-				if ( video.videoWidth && video.videoHeight ) {
-					videoContainer.style.aspectRatio =
-						video.videoWidth + ' / ' + video.videoHeight;
-					if ( ! panel.hidden ) {
-						positionPanel();
-					}
-				}
+		function initializeVideo() {
+			if ( videoInitialized ) {
+				return;
 			}
+			videoInitialized = true;
+			videoTemplate.content
+				.querySelectorAll( 'video' )
+				.forEach( function ( video ) {
+					function updateAspectRatio() {
+						if ( video.videoWidth && video.videoHeight ) {
+							videoContainer.style.aspectRatio =
+								video.videoWidth + ' / ' + video.videoHeight;
+							if ( ! panel.hidden ) {
+								positionPanel();
+							}
+						}
+					}
 
-			video.addEventListener( 'loadedmetadata', updateAspectRatio );
-			updateAspectRatio();
-		} );
+					video.addEventListener(
+						'loadedmetadata',
+						updateAspectRatio
+					);
+					updateAspectRatio();
+				} );
+			videoContainer.appendChild( videoTemplate.content );
+			videoTemplate.remove();
+		}
 
 		function rememberIframeSources() {
 			videoContainer
@@ -372,6 +410,7 @@
 		}
 
 		function openPanel() {
+			initializeVideo();
 			restoreIframeSources();
 			panel.hidden = false;
 			positionPanel();

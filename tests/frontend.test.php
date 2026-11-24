@@ -139,5 +139,6 @@ check( false !== strpos( $markup, '--portal-libras-bg:#0078e1;--portal-libras-fg
 check( false !== strpos( $markup, 'aria-label="Teste &quot;LIBRAS&quot;"' ), 'Accessible label not escaped.' );
 check( false !== strpos( $markup, 'Teste &quot;LIBRAS&quot;</h2>' ) || false !== strpos( $markup, 'Teste &quot;LIBRAS&quot;' ), 'Player title missing.' );
 check( false !== strpos( $markup, '<span class="portal-libras-icon" aria-hidden="true"></span>' ), 'LIBRAS icon missing from player.' );
+check( 1 === preg_match( '/<template class="portal-libras-player__template">\s*<video><\/video>\s*<\/template>/', $markup ), 'Video markup is not inside the template.' );
 
 echo "Frontend VLibras checks passed.\n";
