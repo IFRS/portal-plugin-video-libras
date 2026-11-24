@@ -102,7 +102,7 @@ body.has-portal-video-libras [vw-plugin-wrapper] {
 	touch-action: none;
 }
 
-.portal-libras-player__resize {
+.portal-libras-player button.portal-libras-player__resize:not(:disabled) {
 	position: absolute;
 	top: 0;
 	left: 0;
